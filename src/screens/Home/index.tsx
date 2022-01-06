@@ -12,7 +12,13 @@ const HomeScreen = () => {
       <FlatList
         data={todos}
         renderItem={(todo) => {
-          return <Todo title={todo.item.title} info={todo.item.info} />;
+          return (
+            <Todo
+              title={todo.item.title}
+              info={todo.item.info}
+              id={todo.item.id}
+            />
+          );
         }}
       />
       {/* // )} */}

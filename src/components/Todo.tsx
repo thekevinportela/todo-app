@@ -5,7 +5,7 @@ import useStore from '../store';
 
 const Todo = ({ title, info, id }) => {
   const navigation = useNavigation();
-
+  const deleteTodo = useStore((state) => state.deleteTodo);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -16,7 +16,11 @@ const Todo = ({ title, info, id }) => {
       >
         <Text style={styles.title}>{title}</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          deleteTodo(id);
+        }}
+      >
         <Feather
           name='trash'
           size={24}
