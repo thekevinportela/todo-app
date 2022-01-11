@@ -2,16 +2,21 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useStore from '../store';
+import { TodoItem } from '../types';
 
-const Todo = ({ title, info, id }) => {
+type ITodoProps = {
+  todo: TodoItem;
+};
+
+const Todo: React.FC<ITodoProps> = ({ todo }) => {
+  const { title, id } = todo;
   const navigation = useNavigation();
   const deleteTodo = useStore((state) => state.deleteTodo);
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ToDoDetails', { title, info });
-          console.log(title, info);
+          navigation.navigate('ToDoDetails', { todo });
         }}
       >
         <Text style={styles.title}>{title}</Text>

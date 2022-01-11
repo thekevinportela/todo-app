@@ -1,11 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { MainStackScreenProps } from '../../navigation/Main';
 
-const ToDoDetails = ({ route }) => {
-  const { title, info } = route.params;
+type ITodoDetailsProps = MainStackScreenProps<'ToDoDetails'> & {};
+
+const ToDoDetails: React.FC<ITodoDetailsProps> = ({ route, navigation }) => {
+  const {
+    todo: { title, info },
+  } = route.params;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.text}>{info}</Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 24 }}
+      >
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.text}>{info}</Text>
+      </ScrollView>
     </View>
   );
 };
@@ -17,14 +28,17 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 20,
   },
   title: {
     padding: 20,
     fontWeight: 'bold',
     fontSize: 26,
+    alignSelf: 'center',
   },
   text: {
     paddingHorizontal: 20,
     fontSize: 18,
+    alignSelf: 'center',
   },
 });

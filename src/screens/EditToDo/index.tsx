@@ -9,11 +9,21 @@ import {
 } from 'react-native';
 import useStore from '../../store';
 import uuid from 'react-native-uuid';
+import Header from '../../components/Header';
 
-const CreateToDo = () => {
+import { TodoItem } from '../../types';
+
+type ITodoProps = {
+  todo: TodoItem;
+};
+
+const EditToDo = ({ route }) => {
+  const { todo } = route.params;
   const navigation = useNavigation();
-  const [title, setTitle] = useState('');
-  const [info, setInfo] = useState('');
+  const [title, setTitle] = useState(todo.title);
+  const [info, setInfo] = useState(todo.info);
+  const id = todo.id;
+  const updateTodo = useStore((state) => state.updateTodo);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -23,12 +33,8 @@ const CreateToDo = () => {
     setInfo(text);
   };
 
-  const addTodo = useStore((state) => state.addTodo);
-
-  const handleSubmit = (title, info) => {
-    const id = uuid.v4();
-    addTodo({ title, id, info });
-    navigation.navigate('Home');
+  const handleSubmit = (title, info, id) => {
+    updateTodo({ title, info, id });
   };
 
   return (
@@ -38,6 +44,7 @@ const CreateToDo = () => {
           placeholder='Title'
           placeholderTextColor='#aaa'
           style={styles.titleInput}
+          value={title}
           onChangeText={handleTitleChange}
         />
       </View>
@@ -47,12 +54,16 @@ const CreateToDo = () => {
           placeholderTextColor='#aaa'
           multiline
           style={styles.infoInput}
+          value={info}
           onChangeText={handleInfoChange}
         />
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleSubmit(title, info)}
+        onPress={() => {
+          handleSubmit(title, info, id);
+          navigation.navigate('Home');
+        }}
       >
         <Text>Submit</Text>
       </TouchableOpacity>
@@ -60,7 +71,7 @@ const CreateToDo = () => {
   );
 };
 
-export default CreateToDo;
+export default EditToDo;
 
 const styles = StyleSheet.create({
   container: {
