@@ -1,6 +1,6 @@
 import create, { State } from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware';
-
+import { subscribeWithSelector, persist } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TodoItem } from './types';
 
 type UseTodosState = State & {
@@ -10,25 +10,35 @@ type UseTodosState = State & {
   deleteTodo: (id: string) => void;
 };
 
-const useStore = create<UseTodosState>((set, get) => ({
-  todos: [],
-  addTodo: (todo) => set((state) => ({ todos: [...state.todos, todo] })),
-  deleteTodo: (id) =>
-    set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id) })),
-  updateTodo: (todo) =>
-    set((state) => ({
-      todos: state.todos.map((item) => {
-        if (item.id === todo.id) {
-          return {
-            ...item,
-            title: todo.title,
-            info: todo.info,
-          };
-        } else {
-          return item;
-        }
-      }),
-    })),
-}));
+const useStore = create<UseTodosState>(
+  persist(
+    (set, get) => ({
+      todos: [],
+      addTodo: (todo) => set((state) => ({ todos: [...state.todos, todo] })),
+      deleteTodo: (id) =>
+        set((state) => ({
+          todos: state.todos.filter((todo) => todo.id !== id),
+        })),
+      updateTodo: (todo) =>
+        set((state) => ({
+          todos: state.todos.map((item) => {
+            if (item.id === todo.id) {
+              return {
+                ...item,
+                title: todo.title,
+                info: todo.info,
+              };
+            } else {
+              return item;
+            }
+          }),
+        })),
+    }),
+    {
+      name: 'todo-storage', // unique name
+      getStorage: () => AsyncStorage, // (optional) by default, 'localStorage' is used
+    }
+  )
+);
 
 export default useStore;
