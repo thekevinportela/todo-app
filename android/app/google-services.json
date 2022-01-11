@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "441160921881",
+    "project_id": "todo2022-920f5",
+    "storage_bucket": "todo2022-920f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441160921881:android:9eed4ae9d2b8e3b52fcb88",
+        "android_client_info": {
+          "package_name": "com.thekevinportela.todo2022"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441160921881-jc2pk53e15jllackabgni6vf39320eaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD5VENyHr4hocJ8lYgoNogdbTvldH96MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441160921881-jc2pk53e15jllackabgni6vf39320eaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
