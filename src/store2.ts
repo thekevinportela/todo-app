@@ -40,7 +40,7 @@ const useStore2 = create<UseTodosState>(
 
 useStore.getState().fetch();
 
-const storeData = async (value) => {
+const storeData = async (value: UseTodosState) => {
   try {
     const todoState = JSON.stringify(value.todos);
     await AsyncStorage.setItem('@todo_state', todoState);
