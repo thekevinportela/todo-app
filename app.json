@@ -13,20 +13,30 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.thekevinportela.todo2022",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.thekevinportela.todo2022",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
+      "config": {
+        "firebase": {
+          "appId": "1:441160921881:web:5cbdcb27a8b734602fcb88",
+          "apiKey": "AIzaSyArcKx8gIH1ASxm5gtjtK9LZhewUtG1GFI",
+          "projectId": "todo2022-920f5"
+        }
+      },
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["@react-native-firebase/app"]
   }
 }
