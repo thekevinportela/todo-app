@@ -4,24 +4,21 @@ import Auth from './Auth';
 import useAuthStore from '../stores/auth';
 import { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
+import { ActivityIndicator } from 'react-native';
 
 const Navigation = () => {
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const user = useAuthStore((state) => state.user);
-  const checkAuth = useAuthStore((state) => state.checkAuth);
-  const [initializing, setInitializing] = useState(true);
+  const { isLoggedIn, initializing } = useAuthStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+    initializing: state.initializing,
+  }));
 
-  const onAuthStateChanged = (user) => {
-    checkAuth(user);
-    if (initializing) setInitializing(false);
-  };
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, []);
-
-  if (initializing) return null;
+  if (initializing)
+    return (
+      <ActivityIndicator
+        style={{ flex: 1, alignSelf: 'center' }}
+        size={'large'}
+      />
+    );
   return (
     <NavigationContainer>
       {isLoggedIn ? <Main /> : <Auth />}

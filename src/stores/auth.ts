@@ -1,13 +1,17 @@
 import create, { State } from 'zustand';
-import { subscribeWithSelector, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TodoItem } from '../types';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
+auth().onAuthStateChanged((user) => {
+  useAuthStore.getState().checkAuth(user);
+});
 
 type UseAuthState = State & {
   isLoggedIn: boolean;
-  user: FirebaseAuthTypes.UserCredential | undefined; // type this out correctly :)
-  checkAuth: (user: FirebaseAuthTypes.UserCredential | undefined) => void;
+  user: FirebaseAuthTypes.User | undefined; // type this out correctly :)
+  initializing: boolean;
+  checkAuth: (user: FirebaseAuthTypes.User | null) => void;
   signup: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -18,23 +22,26 @@ const useAuthStore = create<UseAuthState>(
     (set, get) => ({
       user: undefined,
       isLoggedIn: false,
+      initializing: true,
       checkAuth: (user) => {
         if (user) {
           set({
             user,
             isLoggedIn: true,
+            initializing: false,
           });
         } else {
           set({
             isLoggedIn: false,
+            initializing: false,
           });
         }
       },
       signup: (email, password) =>
         auth()
           .createUserWithEmailAndPassword(email, password)
-          .then((user) => {
-            get().checkAuth(user);
+          .then((credentials) => {
+            get().checkAuth(credentials.user);
             console.log('User account created & signed in!');
           })
           .catch((error) => {
@@ -51,12 +58,11 @@ const useAuthStore = create<UseAuthState>(
       login: (email, password) =>
         auth()
           .signInWithEmailAndPassword(email, password)
-          .then((user) => {
+          .then((credentials) => {
             set({
               isLoggedIn: true,
-              user,
+              user: credentials.user,
             });
-            console.log('User successfully logged in!');
           })
           .catch((error) => {
             console.log('ERROR: ', error);
