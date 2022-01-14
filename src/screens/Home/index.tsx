@@ -1,21 +1,25 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Todo from '../../components/Todo';
 import todoData from '../../assets/todoData';
-import useStore from '../../store';
+import useTodoStore from '../../stores/todo';
+import useAuthStore from '../../stores/auth';
+import { Button } from 'native-base';
 
 const HomeScreen = () => {
-  const todos = useStore((state) => state.todos);
+  const logout = useAuthStore((state) => state.logout);
+  const todos = useTodoStore((state) => state.todos);
   //console.log(todos);
   return (
     <View style={styles.container}>
-      {/* {todos.length > 0 && ( */}
       <FlatList
         data={todos}
         renderItem={({ item }) => {
           return <Todo todo={item} />;
         }}
       />
-      {/* // )} */}
+      <Button onPress={() => logout()} mb={'10%'}>
+        logout
+      </Button>
     </View>
   );
 };

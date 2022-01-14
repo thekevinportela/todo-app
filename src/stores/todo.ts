@@ -1,7 +1,7 @@
 import create, { State } from 'zustand';
 import { subscribeWithSelector, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TodoItem } from './types';
+import { TodoItem } from '../types';
 
 type UseTodosState = State & {
   todos: TodoItem[];
@@ -10,7 +10,7 @@ type UseTodosState = State & {
   deleteTodo: (id: string) => void;
 };
 
-const useStore = create<UseTodosState>(
+const useTodoStore = create<UseTodosState>(
   persist(
     (set, get) => ({
       todos: [],
@@ -41,4 +41,4 @@ const useStore = create<UseTodosState>(
   )
 );
 
-export default useStore;
+export default useTodoStore;

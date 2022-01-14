@@ -1,6 +1,6 @@
 import create, { State } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { TodoItem } from './types';
+import { TodoItem } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type UseTodosState = State & {

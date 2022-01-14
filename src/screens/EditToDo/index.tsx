@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import useStore from '../../store';
+
 import uuid from 'react-native-uuid';
 import Header from '../../components/Header';
+import useTodoStore from '../../stores/todo';
 
 import { TodoItem } from '../../types';
 
@@ -23,7 +24,7 @@ const EditToDo = ({ route }) => {
   const [title, setTitle] = useState(todo.title);
   const [info, setInfo] = useState(todo.info);
   const id = todo.id;
-  const updateTodo = useStore((state) => state.updateTodo);
+  const updateTodo = useTodoStore((state) => state.updateTodo);
 
   const handleTitleChange = (text) => {
     setTitle(text);

@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import useStore from '../../store';
+
 import uuid from 'react-native-uuid';
+import useTodoStore from '../../stores/todo';
 
 const CreateToDo = () => {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ const CreateToDo = () => {
     setInfo(text);
   };
 
-  const addTodo = useStore((state) => state.addTodo);
+  const addTodo = useTodoStore((state) => state.addTodo);
 
   const handleSubmit = (title, info) => {
     const id = uuid.v4();
