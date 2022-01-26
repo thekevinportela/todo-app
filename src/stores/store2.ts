@@ -38,7 +38,7 @@ const useStore2 = create<UseTodosState>(
   }))
 );
 
-useStore.getState().fetch();
+useStore2.getState().fetch();
 
 const storeData = async (value: UseTodosState) => {
   try {
@@ -50,7 +50,7 @@ const storeData = async (value: UseTodosState) => {
   }
 };
 
-useStore.subscribe(storeData);
+useStore2.subscribe(storeData);
 
 //useStore.subscribe((state) => state.todos, storeData);
 

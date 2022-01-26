@@ -7,14 +7,40 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
 import useTodoStore from '../../stores/todo';
+import useAuthStore from '../../stores/auth';
 
 const CreateToDo = () => {
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
+  const userID = useAuthStore((state) => state.user?.uid);
+
+  const submitPost = async () => {
+    try {
+      firestore()
+        .collection('todos')
+        .add({
+          userID,
+          title,
+          info,
+          postTime: firestore.Timestamp.fromDate(new Date()),
+        })
+        .then(() => {
+          console.log('Todo Added!');
+        })
+        .catch((err) => {
+          console.log(
+            'Something went wrong with added todo to firestore.',
+            err
+          );
+        });
+    } catch (error) {
+      console.log('ERROR SUBMITTING POST', error);
+    }
+  };
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -29,6 +55,7 @@ const CreateToDo = () => {
   const handleSubmit = (title, info) => {
     const id = uuid.v4();
     addTodo({ title, id, info });
+    submitPost();
     navigation.navigate('Home');
   };
 

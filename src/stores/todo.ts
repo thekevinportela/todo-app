@@ -8,12 +8,18 @@ type UseTodosState = State & {
   addTodo: (todo: TodoItem) => void;
   updateTodo: (todo: TodoItem) => void;
   deleteTodo: (id: string) => void;
+  // setTodos // type me please ;)
 };
 
 const useTodoStore = create<UseTodosState>(
   persist(
     (set, get) => ({
       todos: [],
+      setTodos: (todosFromFirebase) => {
+        set({
+          todos: todosFromFirebase,
+        });
+      },
       addTodo: (todo) => set((state) => ({ todos: [...state.todos, todo] })),
       deleteTodo: (id) =>
         set((state) => ({
