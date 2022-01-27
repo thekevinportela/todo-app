@@ -15,7 +15,7 @@ const HomeScreen = () => {
         renderItem={({ item }) => {
           return <Todo todo={item} />;
         }}
-        keyExtractor={(item) => item.todoID}
+        keyExtractor={(item) => item.id}
       />
       <Button onPress={() => logout()} mb={'10%'}>
         logout

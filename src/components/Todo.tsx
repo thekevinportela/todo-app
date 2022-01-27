@@ -18,6 +18,7 @@ const Todo: React.FC<ITodoProps> = ({ todo }) => {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ToDoDetails', { todo });
+          console.log('TODO: ', todo);
         }}
       >
         <Text style={styles.title}>{title}</Text>

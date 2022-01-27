@@ -4,9 +4,7 @@ import { MainStackScreenProps } from '../../navigation/Main';
 type ITodoDetailsProps = MainStackScreenProps<'ToDoDetails'> & {};
 
 const ToDoDetails: React.FC<ITodoDetailsProps> = ({ route, navigation }) => {
-  const {
-    todo: { title, info },
-  } = route.params;
+  const { todo } = route.params;
 
   return (
     <View style={styles.container}>
@@ -14,8 +12,8 @@ const ToDoDetails: React.FC<ITodoDetailsProps> = ({ route, navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 24 }}
       >
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{info}</Text>
+        <Text style={styles.title}>{todo.title}</Text>
+        <Text style={styles.text}>{todo.info}</Text>
       </ScrollView>
     </View>
   );

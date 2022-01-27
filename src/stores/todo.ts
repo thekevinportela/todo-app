@@ -7,14 +7,12 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import useAuthStore from './auth';
 
-//  MOVE CREATE TODO INTO HERE AND FIX DELETE TODO (SHOULD DELETE FIRESTORE)
-
 type UseTodosState = State & {
   todos: TodoItem[];
   addTodo: (todo: TodoItem) => void;
   updateTodo: (todo: TodoItem) => void;
   deleteTodo: (id: string) => void;
-  // setTodos // type me please ;)
+  setTodos: (todosFromFirebase: []) => void;
 };
 
 const useTodoStore = create<UseTodosState>(
@@ -27,24 +25,28 @@ const useTodoStore = create<UseTodosState>(
         });
       },
       addTodo: (todo) => set((state) => ({ todos: [...state.todos, todo] })),
-      deleteTodo: (id) =>
-        set((state) => ({
-          todos: state.todos.filter((todo) => todo.id !== id),
-        })),
-      updateTodo: (todo) =>
-        set((state) => ({
-          todos: state.todos.map((item) => {
-            if (item.id === todo.id) {
-              return {
-                ...item,
-                title: todo.title,
-                info: todo.info,
-              };
-            } else {
-              return item;
-            }
-          }),
-        })),
+      deleteTodo: (id) => {
+        firestore()
+          .collection('todos')
+          .doc(id)
+          .delete()
+          .then(() => {
+            console.log('User deleted!');
+          });
+      },
+
+      updateTodo: (todo) => {
+        firestore()
+          .collection('todos')
+          .doc(todo.id)
+          .update({
+            title: todo.title,
+            info: todo.info,
+          })
+          .then(() => {
+            console.log('User updated!');
+          });
+      },
     }),
     {
       name: 'todo-storage', // unique name
@@ -57,7 +59,7 @@ export function setTodosListener(uid: string) {
   function onResult(
     QuerySnapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>
   ) {
-    const list = [];
+    const list: any = [];
     QuerySnapshot.forEach((doc) => {
       const { info, postTime, title, userID } = doc.data();
       list.unshift({
@@ -71,7 +73,7 @@ export function setTodosListener(uid: string) {
     useTodoStore.getState().setTodos(list);
   }
 
-  function onError(error) {
+  function onError(error: Error) {
     console.error(error);
   }
 
