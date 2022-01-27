@@ -2,9 +2,13 @@ import create, { State } from 'zustand';
 import { persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { setTodosListener } from './todo';
 
 auth().onAuthStateChanged((user) => {
   useAuthStore.getState().checkAuth(user);
+  if (user) {
+    setTodosListener(user.uid);
+  }
 });
 
 type UseAuthState = State & {
