@@ -11,6 +11,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import EditToDo from '../screens/EditToDo';
 import { TodoItem } from '../types';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+import CustomDrawerContent from '../components/CustomDrawerContent';
 
 type MainStackParamsList = {
   Home: undefined;
@@ -18,24 +26,59 @@ type MainStackParamsList = {
 };
 
 const Stack = createNativeStackNavigator<MainStackParamsList>();
+const Drawer = createDrawerNavigator<MainStackParamsList>();
 
 export type MainStackScreenProps<Screen extends keyof MainStackParamsList> =
   NativeStackScreenProps<MainStackParamsList, Screen>;
+
+export const HomeDrawer = () => {
+  return (
+    <Drawer.Navigator drawerContent={() => <CustomDrawerContent />}>
+      <Drawer.Screen
+        name='Home'
+        component={HomeScreen}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#181A25',
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ paddingRight: 5 }}
+              onPress={() => navigation.navigate('CreateToDo')}
+            >
+              <Entypo name='plus' size={34} color='#aaa' />
+            </TouchableOpacity>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{ paddingLeft: 5 }}
+              onPress={() => navigation.toggleDrawer()}
+            >
+              <Ionicons name='ios-menu' size={34} color='#aaa' />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 const Main = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Home'
-        component={HomeScreen}
-        options={({ navigation }) => ({
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('CreateToDo')}>
-              <Entypo name='plus' size={24} color='black' />
-            </TouchableOpacity>
-          ),
+        name='HomeDrawer'
+        component={HomeDrawer}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#181A25',
+          },
         })}
       />
+
       <Stack.Screen
         name='ToDoDetails'
         component={ToDoDetails}

@@ -80,6 +80,7 @@ export function setTodosListener(uid: string) {
   const unsubscribe = firestore()
     .collection('todos')
     .where('userID', '==', uid)
+    .orderBy('postTime')
     .onSnapshot(onResult, onError);
 }
 

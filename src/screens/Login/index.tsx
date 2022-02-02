@@ -33,27 +33,22 @@ const LoginScreen = () => {
   };
   const navigation = useNavigation();
   return (
-    <Center>
+    <Center
+      width='full'
+      height='full'
+      bg={{
+        linearGradient: {
+          colors: ['#181A25', '#161F3C', '#41145E'],
+          start: [1, 0],
+          end: [1.7, 0.6],
+        },
+      }}
+    >
       <Box safeArea p='2' w='90%' maxW='290' py='8'>
-        <Heading
-          size='lg'
-          color='coolGray.800'
-          _dark={{
-            color: 'warmGray.50',
-          }}
-          fontWeight='semibold'
-        >
+        <Heading size='lg' color='#eee' fontWeight='semibold'>
           Welcome
         </Heading>
-        <Heading
-          mt='1'
-          color='coolGray.600'
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight='medium'
-          size='xs'
-        >
+        <Heading mt='1' color='#aaa' fontWeight='medium' size='xs'>
           login to continue!
         </Heading>
         <VStack space={3} mt='5'>
@@ -64,8 +59,21 @@ const LoginScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormControl>
-                <FormControl.Label>Email</FormControl.Label>
-                <Input onBlur={onBlur} onChangeText={onChange} value={value} />
+                <FormControl.Label
+                  _text={{
+                    color: '#aaa',
+                    fontWeight: 'medium',
+                    fontSize: 'sm',
+                  }}
+                >
+                  Email
+                </FormControl.Label>
+                <Input
+                  color='white'
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
               </FormControl>
             )}
             name='email'
@@ -78,8 +86,17 @@ const LoginScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormControl>
-                <FormControl.Label>Password</FormControl.Label>
+                <FormControl.Label
+                  _text={{
+                    color: '#aaa',
+                    fontWeight: 'medium',
+                    fontSize: 'sm',
+                  }}
+                >
+                  Password
+                </FormControl.Label>
                 <Input
+                  color='white'
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -95,13 +112,7 @@ const LoginScreen = () => {
             Login
           </Button>
           <HStack mt='6' justifyContent='center'>
-            <Text
-              fontSize='sm'
-              color='coolGray.600'
-              _dark={{
-                color: 'warmGray.200',
-              }}
-            >
+            <Text fontSize='sm' color='#aaa'>
               Don't have an account?{' '}
             </Text>
             <Link

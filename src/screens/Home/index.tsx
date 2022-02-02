@@ -1,34 +1,36 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Todo from '../../components/Todo';
 import useTodoStore from '../../stores/todo';
-import useAuthStore from '../../stores/auth';
-import { Button } from 'native-base';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Box } from 'native-base';
 
 const HomeScreen = () => {
-  const logout = useAuthStore((state) => state.logout);
   const todos = useTodoStore((state) => state.todos);
 
   return (
-    <View style={styles.container}>
+    <Box
+      width='full'
+      height='full'
+      bg={{
+        linearGradient: {
+          colors: ['#181A25', '#161F3C', '#41145E'],
+          start: [1, 0],
+          end: [1.7, 0.6],
+        },
+      }}
+    >
       <FlatList
         data={todos}
         renderItem={({ item }) => {
           return <Todo todo={item} />;
         }}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingTop: '5%' }}
       />
-      <Button onPress={() => logout()} mb={'10%'}>
-        logout
-      </Button>
-    </View>
+    </Box>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
+const styles = StyleSheet.create({});
