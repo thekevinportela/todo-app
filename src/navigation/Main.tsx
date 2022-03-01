@@ -47,7 +47,7 @@ export const HomeDrawer = () => {
               style={{ paddingRight: 5 }}
               onPress={() => navigation.navigate('CreateToDo')}
             >
-              <Entypo name='plus' size={34} color='#aaa' />
+              <Ionicons name='add' size={34} color='#aaa' />
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -55,7 +55,7 @@ export const HomeDrawer = () => {
               style={{ paddingLeft: 5 }}
               onPress={() => navigation.toggleDrawer()}
             >
-              <Ionicons name='ios-menu' size={34} color='#aaa' />
+              <Ionicons name='menu-outline' size={30} color='#aaa' />
             </TouchableOpacity>
           ),
         })}
@@ -94,7 +94,25 @@ const Main = () => {
           ),
         })}
       />
-      <Stack.Screen name='CreateToDo' component={CreateToDo} />
+      <Stack.Screen
+        name='CreateToDo'
+        component={CreateToDo}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#181A25',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <AntDesign name='back' size={24} color='#aaa' />
+            </TouchableOpacity>
+          ),
+        })}
+      />
       <Stack.Screen name='EditToDo' component={EditToDo} />
     </Stack.Navigator>
   );

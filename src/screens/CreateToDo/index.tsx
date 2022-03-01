@@ -11,6 +11,7 @@ import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
 import useTodoStore from '../../stores/todo';
 import useAuthStore from '../../stores/auth';
+import { Box, Button, Center } from 'native-base';
 
 const CreateToDo = () => {
   const navigation = useNavigation();
@@ -60,31 +61,46 @@ const CreateToDo = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.title}>
+    <Center
+      height='full'
+      width='full'
+      paddingBottom='8'
+      bg={{
+        linearGradient: {
+          colors: ['#181A25', '#161F3C', '#41145E'],
+          start: [1, 0],
+          end: [1.7, 0.6],
+        },
+      }}
+    >
+      <Box paddingX='4' width='full'>
         <TextInput
           placeholder='Title'
-          placeholderTextColor='#aaa'
+          placeholderTextColor='#ffffff90'
           style={styles.titleInput}
           onChangeText={handleTitleChange}
         />
-      </View>
-      <View style={styles.info}>
+      </Box>
+      <Box width='full' paddingX='4' height='2/3'>
         <TextInput
           placeholder='Info'
-          placeholderTextColor='#aaa'
+          placeholderTextColor='#ffffff90'
           multiline
           style={styles.infoInput}
           onChangeText={handleInfoChange}
         />
-      </View>
-      <TouchableOpacity
-        style={styles.button}
+      </Box>
+      <Button
+        width='4/6'
+        p='3'
+        mb='3'
+        rounded='10'
+        bg='#4f46e5'
         onPress={() => handleSubmit(title, info)}
       >
-        <Text>Submit</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={{ color: 'white' }}>Submit</Text>
+      </Button>
+    </Center>
   );
 };
 
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  title: { padding: 20, width: '100%' },
+  title: { width: '100%' },
   info: {
     paddingHorizontal: 20,
     width: '100%',
@@ -103,22 +119,23 @@ const styles = StyleSheet.create({
     height: '60%',
   },
   titleInput: {
-    height: 40,
+    height: 50,
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    fontSize: 24,
+    fontSize: 28,
     textAlign: 'center',
+    backgroundColor: '#dddddd20',
+    color: 'white',
   },
   infoInput: {
     margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
-    fontSize: 18,
+    fontSize: 20,
     height: '90%',
-    //backgroundColor: 'red',
+    backgroundColor: '#dddddd20',
+    color: 'white',
   },
   button: {
     alignItems: 'center',

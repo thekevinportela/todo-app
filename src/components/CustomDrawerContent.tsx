@@ -4,11 +4,13 @@ import useAuthStore from '../stores/auth';
 function CustomDrawerContent() {
   const logout = useAuthStore((state) => state.logout);
   return (
-    <DrawerContentScrollView style={{ backgroundColor: '#181A25' }}>
+    <DrawerContentScrollView style={{ backgroundColor: '#41145E' }}>
       <DrawerItem
-        style={{ backgroundColor: '#41145E' }}
+        style={{
+          backgroundColor: '#181A2580',
+        }}
         label='Logout'
-        labelStyle={{ color: 'white' }}
+        labelStyle={{ color: 'white', alignSelf: 'center' }}
         onPress={() => logout()}
       />
     </DrawerContentScrollView>

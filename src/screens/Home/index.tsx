@@ -9,6 +9,7 @@ const HomeScreen = () => {
 
   return (
     <Box
+      alignItems='center'
       width='full'
       height='full'
       bg={{
@@ -19,14 +20,16 @@ const HomeScreen = () => {
         },
       }}
     >
-      <FlatList
-        data={todos}
-        renderItem={({ item }) => {
-          return <Todo todo={item} />;
-        }}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingTop: '5%' }}
-      />
+      <Box width='5/6'>
+        <FlatList
+          data={todos}
+          renderItem={({ item }) => {
+            return <Todo todo={item} />;
+          }}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingTop: '5%' }}
+        />
+      </Box>
     </Box>
   );
 };
