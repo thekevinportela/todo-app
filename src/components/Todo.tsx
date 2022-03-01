@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Animated } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -6,6 +6,7 @@ import { TodoItem } from '../types';
 import useTodoStore from '../stores/todo';
 import { Badge, Box, Flex, HStack, Pressable, Spacer, Text } from 'native-base';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+// import Animated from 'react-native-reanimated';
 
 type ITodoProps = {
   todo: TodoItem;
@@ -15,46 +16,19 @@ const Todo: React.FC<ITodoProps> = ({ todo }) => {
   const { title, id } = todo;
   const navigation = useNavigation();
   const deleteTodo = useTodoStore((state) => state.deleteTodo);
-  const rightSwipe = () => {
-    return (
-      <HStack>
-        <Pressable
-          mb={3}
-          ml={3}
-          px={6}
-          rounded='10'
-          bg='green.900'
-          alignItems='center'
-          justifyContent='center'
-          onPress={() => {
-            deleteTodo(id);
-          }}
-        >
-          <Box>
-            <Feather name='check-square' size={24} color='white' />
-          </Box>
-        </Pressable>
-        <Pressable
-          mb={3}
-          ml={3}
-          px={6}
-          rounded='10'
-          bg='red.900'
-          alignItems='center'
-          justifyContent='center'
-          onPress={() => {
-            deleteTodo(id);
-          }}
-        >
-          <Box>
-            <Feather name='trash' size={24} color='white' />
-          </Box>
-        </Pressable>
-      </HStack>
-    );
-  };
+
   return (
-    <Swipeable renderRightActions={rightSwipe}>
+    <Swipeable
+      renderRightActions={(progress, dragX) => {
+        return (
+          <SwipeButtons
+            progress={progress}
+            deleteTodo={() => deleteTodo(id)}
+            dragX={dragX}
+          />
+        );
+      }}
+    >
       <Box
         width='full'
         alignSelf={'center'}
@@ -147,3 +121,94 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+const SwipeButtons = ({
+  progress,
+  dragX,
+  deleteTodo,
+}: {
+  dragX: Animated.AnimatedInterpolation;
+  progress: Animated.AnimatedInterpolation;
+  deleteTodo: any;
+}) => {
+  const scale = progress.interpolate({
+    inputRange: [0, 0.5],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp',
+  });
+
+  const scale2 = progress.interpolate({
+    inputRange: [0.5, 1],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp',
+  });
+
+  const opacity = progress.interpolate({
+    inputRange: [0, 0.5],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp',
+  });
+
+  const opacity2 = progress.interpolate({
+    inputRange: [0.5, 1],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp',
+  });
+  return (
+    // <HStack>
+    <View style={{ flexDirection: 'row' }}>
+      <Animated.View
+        style={{
+          // height: '100%',
+          // flexDirection: 'row',
+          opacity: opacity2,
+          transform: [{ scale: scale2 }],
+        }}
+      >
+        <Pressable
+          // mb={3}
+          ml={3}
+          px={6}
+          height={'5/6'}
+          // height={18}
+          // width={18}
+          rounded='10'
+          bg='green.900'
+          alignItems='center'
+          justifyContent='center'
+          onPress={deleteTodo}
+        >
+          <Box>
+            <Feather name='check-square' size={24} color='white' />
+          </Box>
+        </Pressable>
+      </Animated.View>
+      <Animated.View
+        style={{
+          // height: '100%',
+          // flexDirection: 'row',
+          opacity: opacity,
+          transform: [{ scale: scale }],
+        }}
+      >
+        <Pressable
+          mb={3}
+          ml={3}
+          px={6}
+          rounded='10'
+          bg='red.900'
+          height={'5/6'}
+          alignItems='center'
+          justifyContent='center'
+          onPress={deleteTodo}
+        >
+          <Box>
+            <Feather name='trash' size={24} color='white' />
+          </Box>
+        </Pressable>
+      </Animated.View>
+
+      {/* // </HStack> */}
+    </View>
+  );
+};
