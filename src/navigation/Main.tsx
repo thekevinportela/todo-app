@@ -83,13 +83,26 @@ const Main = () => {
         name='ToDoDetails'
         component={ToDoDetails}
         options={({ route, navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#181A25',
+          },
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('EditToDo', { todo: route.params.todo });
               }}
             >
-              <AntDesign name='edit' size={24} color='black' />
+              <AntDesign name='edit' size={24} color='#aaa' />
+            </TouchableOpacity>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <AntDesign name='back' size={24} color='#aaa' />
             </TouchableOpacity>
           ),
         })}
@@ -113,7 +126,25 @@ const Main = () => {
           ),
         })}
       />
-      <Stack.Screen name='EditToDo' component={EditToDo} />
+      <Stack.Screen
+        name='EditToDo'
+        component={EditToDo}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#181A25',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <AntDesign name='back' size={24} color='#aaa' />
+            </TouchableOpacity>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };

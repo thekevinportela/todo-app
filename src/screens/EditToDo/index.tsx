@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { Box, Button, Center } from 'native-base';
 import { useState } from 'react';
 import {
   StyleSheet,
@@ -39,8 +40,19 @@ const EditToDo = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.title}>
+    <Center
+      height='full'
+      width='full'
+      paddingBottom='8'
+      bg={{
+        linearGradient: {
+          colors: ['#181A25', '#161F3C', '#41145E'],
+          start: [1, 0],
+          end: [1.7, 0.6],
+        },
+      }}
+    >
+      <Box paddingX='4' width='full'>
         <TextInput
           placeholder='Title'
           placeholderTextColor='#aaa'
@@ -48,7 +60,7 @@ const EditToDo = ({ route }) => {
           value={title}
           onChangeText={handleTitleChange}
         />
-      </View>
+      </Box>
       <View style={styles.info}>
         <TextInput
           placeholder='Info'
@@ -59,16 +71,17 @@ const EditToDo = ({ route }) => {
           onChangeText={handleInfoChange}
         />
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          handleSubmit(title, info, id);
-          navigation.navigate('Home');
-        }}
+      <Button
+        width='4/6'
+        p='3'
+        mb='3'
+        rounded='10'
+        bg='#4f46e590'
+        onPress={() => handleSubmit(title, info, id)}
       >
-        <Text>Submit</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={{ color: 'white' }}>Submit</Text>
+      </Button>
+    </Center>
   );
 };
 
@@ -79,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  title: { padding: 20, width: '100%' },
+  title: { width: '100%' },
   info: {
     paddingHorizontal: 20,
     width: '100%',
@@ -87,22 +100,23 @@ const styles = StyleSheet.create({
     height: '60%',
   },
   titleInput: {
-    height: 40,
+    height: 50,
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    fontSize: 24,
+    fontSize: 28,
     textAlign: 'center',
+    backgroundColor: '#dddddd20',
+    color: 'white',
   },
   infoInput: {
     margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
-    fontSize: 18,
+    fontSize: 20,
     height: '90%',
-    //backgroundColor: 'red',
+    backgroundColor: '#dddddd20',
+    color: 'white',
   },
   button: {
     alignItems: 'center',

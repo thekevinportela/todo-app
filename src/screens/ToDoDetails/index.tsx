@@ -1,3 +1,4 @@
+import { Box } from 'native-base';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { MainStackScreenProps } from '../../navigation/Main';
 
@@ -7,7 +8,19 @@ const ToDoDetails: React.FC<ITodoDetailsProps> = ({ route, navigation }) => {
   const { todo } = route.params;
 
   return (
-    <View style={styles.container}>
+    <Box
+      alignItems='center'
+      width='full'
+      height='full'
+      bg={{
+        linearGradient: {
+          colors: ['#181A25', '#161F3C', '#41145E'],
+          start: [1, 0],
+          end: [1.7, 0.6],
+        },
+      }}
+      // style={styles.container}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 24 }}
@@ -15,7 +28,7 @@ const ToDoDetails: React.FC<ITodoDetailsProps> = ({ route, navigation }) => {
         <Text style={styles.title}>{todo.title}</Text>
         <Text style={styles.text}>{todo.info}</Text>
       </ScrollView>
-    </View>
+    </Box>
   );
 };
 
@@ -33,10 +46,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     alignSelf: 'center',
+    color: '#fff',
   },
   text: {
     paddingHorizontal: 20,
     fontSize: 18,
     alignSelf: 'center',
+    color: '#fff'
   },
 });

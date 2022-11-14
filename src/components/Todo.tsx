@@ -6,6 +6,7 @@ import { TodoItem } from '../types';
 import useTodoStore from '../stores/todo';
 import { Badge, Box, Flex, HStack, Pressable, Spacer, Text } from 'native-base';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { Entypo } from '@expo/vector-icons';
 // import Animated from 'react-native-reanimated';
 
 type ITodoProps = {
@@ -31,18 +32,19 @@ const Todo: React.FC<ITodoProps> = ({ todo }) => {
     >
       <Box
         width='full'
-        alignSelf={'center'}
-        alignItems='center'
+        // alignSelf={'center'}
+        // justifyContent={'center'}
+        // alignItems='center'
         p='3'
         mb='3'
-        rounded='10'
+        // rounded='10'
         // borderColor='rgba(120,120,120,0.2)'
         // borderWidth={1}
         bg={{
           linearGradient: {
             // colors: ['#325896', '#723E82'],
             // colors: ['indigo.500', 'indigo.800', 'indigo.800'],
-            colors: ['#A352BB', '#B32970'],
+            colors: ['#B32970', '#A352BB', '#B3297010'],
             // colors: ['rgba(54,59,83,1)', 'rgba(54,59,83,0.2)'],
             // colors: ['rgba(24,26,37,0.3)', 'rgba(65,20,92,0.5)'],
             start: [0, 0],
@@ -61,6 +63,7 @@ const Todo: React.FC<ITodoProps> = ({ todo }) => {
           >
             <Box justifyContent='center' alignItems='center'>
               <Text color='white' fontWeight='normal' fontSize='2xl'>
+                <Entypo name='chevron-right' size={24} color='white' />
                 {title}
               </Text>
             </Box>

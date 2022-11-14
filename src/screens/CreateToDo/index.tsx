@@ -95,7 +95,7 @@ const CreateToDo = () => {
         p='3'
         mb='3'
         rounded='10'
-        bg='#4f46e5'
+        bg='#4f46e590'
         onPress={() => handleSubmit(title, info)}
       >
         <Text style={{ color: 'white' }}>Submit</Text>

@@ -20,16 +20,53 @@ const HomeScreen = () => {
         },
       }}
     >
-      <Box width='5/6'>
-        <FlatList
-          data={todos}
-          renderItem={({ item }) => {
-            return <Todo todo={item} />;
-          }}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingTop: '5%' }}
-        />
-      </Box>
+      {todos.length !== 0 ? (
+        <Box width='full' height='full'>
+          <FlatList
+            data={todos}
+            renderItem={({ item }) => {
+              return <Todo todo={item} />;
+            }}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingTop: '5%' }}
+          />
+        </Box>
+      ) : (
+        <Box height='5/6' width='full' justifyContent='center'>
+          <Text
+            style={{
+              color: '#aaa',
+              fontSize: 36,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            FIND
+          </Text>
+          <Text
+            style={{
+              color: '#aaa',
+              fontSize: 36,
+              paddingTop: 20,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            SOMETHING
+          </Text>
+          <Text
+            style={{
+              color: '#aaa',
+              fontSize: 36,
+              paddingTop: 20,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            TO DO
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 };
