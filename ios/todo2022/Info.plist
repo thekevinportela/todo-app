@@ -28,6 +28,12 @@
           <string>com.thekevinportela.todo2022</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.441160921881-0d5vv3ar27tssavk7kg31ld65r6i2s88</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
